@@ -24,7 +24,7 @@ export default function Auth(){
                 method: 'POST',
                 withCredentials: true,
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData),
             });
@@ -37,10 +37,10 @@ export default function Auth(){
                 navigate.replace('/dashboard')
 
             } else {
-                setError(data.message);
+                setError(data.message || 'Login failed');
             }
         } catch (err) {
-            setError('Network error');
+            setError('Network error: ', err);
         }
     }
 
@@ -57,25 +57,23 @@ export default function Auth(){
 
             // Parse the response
             const data = await response.json();
-            console.log('Response data:', data);
 
             // Check if the response is ok
-            if (!response.ok || data.error) {
-                console.log('not ok')
-                const data = await response.json();
-                setError(data?.error);
-                console.log(data?.error)
-                return; // Exit the function to prevent navigation
-            }else{
-    
+            if (response.ok) {
+
                 // If the response is ok and data is successfully received
                 setCookie('token', data.token);
                 setCookie('user', data.username);
                 navigate.replace('/profile/newprofile');
+            }else{
+
+                console.log('not ok')
+                setError(data.message);
+                return; // Exit the function to prevent navigation
             }
 
         } catch (err) {
-            setError('Network error');
+            setError('Network error', err);
         }
     }
 
@@ -97,7 +95,7 @@ export default function Auth(){
                         <small>New user? click here to Signup!</small>
                     </h2>
 
-                    {error && <p className="text-red-500 mb-4" >{error}</p>}
+                    {error && <p className="text-red-500 mb-4 break-words text-center" >{error}</p>}
 
                     <form onSubmit={(e) => {
                         e.preventDefault();

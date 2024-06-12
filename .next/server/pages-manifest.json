@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/social/replies/[postid]": "pages/social/replies/[postid].js",
-  "/social": "pages/social.js",
-  "/dashboard": "pages/dashboard.js"
+  "/dashboard": "pages/dashboard.js",
+  "/auth": "pages/auth.js"
 }

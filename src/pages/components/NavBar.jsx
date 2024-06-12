@@ -33,6 +33,7 @@ const NavBar = (props) => {
 
             if (response.ok) {
                 removeCookie("token");
+                removeCookie("user");
                 navigate.replace('/auth')
 
             } else {
