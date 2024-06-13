@@ -39,9 +39,8 @@ const CreatePost = () => {
 
                 // Redirect or perform an action on successful login
                 router.replace('/social')
-            } else {
-                setError(data.message);
             }
+            
         } catch (err) {
             console.log(err)
             setError('Network error');

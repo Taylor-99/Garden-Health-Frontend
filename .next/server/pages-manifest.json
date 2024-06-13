@@ -2,8 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/social/createreply/[postId]": "pages/social/createreply/[postId].js",
   "/social": "pages/social.js",
   "/dashboard": "pages/dashboard.js",
-  "/social/replies/[postid]": "pages/social/replies/[postid].js"
+  "/social/replies/[postid]": "pages/social/replies/[postid].js",
+  "/social/createreply/[postId]": "pages/social/createreply/[postId].js",
+  "/social/createpost": "pages/social/createpost.js"
 }

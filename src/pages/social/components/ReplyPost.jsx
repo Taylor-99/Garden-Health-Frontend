@@ -1,10 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-// import { useRouter } from 'next/router'
-import { useRouter } from 'next/router'
-import Link from 'next/link';
-import withAuth from '../../components/withAuth';
 
 const ReplyPost = ({postid}) => {
     const [cookies] = useCookies(['token']);
@@ -13,7 +9,7 @@ const ReplyPost = ({postid}) => {
     const fetchPost = async () => {
 
         try {
-            console.log("id = ", postId)
+            console.log("id = ", postid)
             const response = await fetch(`http://localhost:4000/social/post/${postid}`, {
                 credentials: 'include',
                 headers: {
@@ -23,11 +19,16 @@ const ReplyPost = ({postid}) => {
 
             const data = await response.json()
             setPost(data)
-            setLoading(false)
         } catch (error) {
             console.error('Error:', error.message);
         }
     };
+
+    useEffect(() => {
+
+        fetchPost();
+
+    }, [postid]);
   return (
     <div>
         <div className="bg-white rounded-lg shadow-md p-4 mb-4 w-full" >
