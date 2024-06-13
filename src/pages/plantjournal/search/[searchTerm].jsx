@@ -149,6 +149,8 @@ const Search = () => {
                 </ul>
 
         </div>
+
+        <a href="https://trefle.io/" className="text-sm text-blue-500 hover:underline" >Plant data provided by Trefle </a>
     </div>
   )
 }

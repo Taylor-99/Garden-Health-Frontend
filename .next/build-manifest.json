@@ -22,25 +22,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/social": [
+    "/plantjournal/garden": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/social.js"
+      "static/chunks/pages/plantjournal/garden.js"
     ],
-    "/social/createpost": [
+    "/plantjournal/library": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/social/createpost.js"
-    ],
-    "/social/createreply/[postId]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/social/createreply/[postId].js"
-    ],
-    "/social/replies/[postid]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/social/replies/[postid].js"
+      "static/chunks/pages/plantjournal/library.js"
     ]
   },
   "ampFirstPages": []

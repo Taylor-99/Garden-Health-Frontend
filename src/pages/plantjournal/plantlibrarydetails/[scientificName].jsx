@@ -70,6 +70,8 @@ const PlantLibraryDetails = () => {
             <p className="mb-2"><span className="font-semibold">IPNI Status:</span> {plant.status}</p>
             <p className="mb-2"><span className="font-semibold">Taxonomic Rank:</span> {plant.rank}</p>
         </div>
+
+        <a href="https://trefle.io/" className="text-sm text-blue-500 hover:underline" >Plant data provided by Trefle </a>
     </div>
 
   )
