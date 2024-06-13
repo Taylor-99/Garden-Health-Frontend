@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie'
+import { useCookies, removeCookie } from 'react-cookie'
 import withAuth from './withAuth'
 
 const NavBar = (props) => {
@@ -36,10 +36,10 @@ const NavBar = (props) => {
                 removeCookie("user");
                 navigate.replace('/auth')
 
-            } else {
-                console.log(data.message);
-            }
+            } 
+
         } catch (err) {
+            console.log(err)
             console.log('Network error');
         }
     };

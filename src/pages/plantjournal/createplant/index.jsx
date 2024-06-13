@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import NavBar from '../../components/NavBar.jsx';
 import withAuth from '../../components/withAuth.jsx'
@@ -32,7 +31,6 @@ const CreatePlant = () => {
         try {
 
             const formData = new FormData();
-            // console.log('form data = ', formData)
             formData.append('plantImage', file);
             formData.append('plantName', plantFormData.plantName)
             formData.append('plantSpecies', plantFormData.plantSpecies)
@@ -44,14 +42,10 @@ const CreatePlant = () => {
             formData.append('fertilizer', plantFormData.fertilizer)
             formData.append('notes', plantFormData.notes)
 
-            // console.log(formData)
-
-            console.log("Sending data")
             const response = await fetch('http://localhost:4000/garden/create', {
                 method: 'POST',
                 credentials: "include",
                 headers: {
-                    // 'Content-Type': 'multipart/formdata',
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
                 },
                 body: formData,
@@ -62,9 +56,8 @@ const CreatePlant = () => {
             if (response.ok) {
                 // Redirect or perform an action on successful login
                 navigate.replace('/plantjournal/garden')
-            } else {
-                setError(data.message);
-            }
+            } 
+
         } catch (err) {
             setError('Network error');
         }
@@ -162,10 +155,9 @@ const CreatePlant = () => {
 
                 <br></br>
 
-                <label htmlFor="plantImage" className="block" >Plant Image: </label>
+                <label htmlFor="plantImage" className="block" >Upload a picture of your plant: </label>
                 <input type='file' 
                 name="plantImage"  
-                placeholder="Upload image of your plant"
                 onChange={handleFileChange} 
                 className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"
                 />

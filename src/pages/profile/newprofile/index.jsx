@@ -15,39 +15,57 @@ const CreateProfile = () => {
         bio: '',
     });
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
 
     const navigate = useRouter();
     const [cookies] = useCookies(['token']);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProfileData({ ...profileData, [name]: value });
-    };
+    const [file, setFile] = useState(null);
 
     const handleSubmit = async () => {
         try {
-            console.log(profileData)
-            const response = await fetch('http://localhost:4000/profile/createprofile/', {
+            
+            const profileFormData = new FormData();
+            profileFormData.append('image', file);
+            profileFormData.append('fName', profileData.fName)
+            profileFormData.append('lName', profileData.lName)
+            profileFormData.append('city', profileData.city)
+            profileFormData.append('state', profileData.state)
+            profileFormData.append('gExperience', profileData.gExperience)
+            profileFormData.append('aExperience', profileData.aExperience)
+
+            const response = await fetch('http://localhost:4000/profile/newprofile', {
                 method: 'POST',
                 credentials: 'include', // Important to include cookies
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
                 },
-                body: JSON.stringify(profileData),
+                body: profileFormData,
             });
 
+            await response.json();
+
+            console.log(response)
+
             if (response.ok) {
-                setSuccess('Profile created successfully');
+                
                 navigate.replace('/dashboard')
-            } else {
-                setError(data.message);
-            }
+            } 
+
         } catch (err) {
+            console.log(err)
             setError('Network error');
         }
     };
+
+    const handleChange = (e) => {
+        setProfileData({
+            ...profileData, 
+            [e.target.name]: e.target.value
+        })
+    };
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]); // Get the first file from the file input
+      };
 
     return (
         <div className="min-h-screen flex-col items-center justify-center bg-gray-100 mx-auto" >
@@ -55,12 +73,12 @@ const CreateProfile = () => {
             <h2 className="text-xl font-semibold mt-4 text-center" >Create Profile</h2>
 
             {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
 
-            <form onSubmit={(e) => {
+            <form 
+                encType = 'multipart/formdata'
+                onSubmit={(e) => {
                 e.preventDefault();
                 setError('');
-                setSuccess('');
                 handleSubmit()
             }} className="mt-4 space-y-4 mx-auto max-w-md">
 
@@ -86,12 +104,11 @@ const CreateProfile = () => {
 
                 <br></br>
 
-                <input 
-                type="text" 
+                <label htmlFor="image" className="block" >Upload a profile picture: </label>
+                <input type="file" 
                 name="image" 
-                placeholder="Image URL" 
-                value={profileData.image} 
-                onChange={handleChange} 
+                id='image' 
+                onChange={handleFileChange} 
                 className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"
                 />
 
@@ -171,7 +188,7 @@ const CreateProfile = () => {
                 <br></br>
 
                 <select
-                    name="gardeningExperience"
+                    name="gExperience"
                     value={profileData.gExperience}
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"
@@ -187,7 +204,7 @@ const CreateProfile = () => {
                 <br></br>
 
                 <select
-                    name="activityLevel"
+                    name="aExperience"
                     value={profileData.aExperience} 
                     onChange={handleChange}
                     className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"

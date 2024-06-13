@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
-import Link from 'next/link';
 import withAuth from '../../components/withAuth';
 import NavBar from '../../components/NavBar';
 import ReplyPost from '../components/ReplyPost'
@@ -14,20 +13,17 @@ const CreateReply = () => {
 
     const [replyForm, setReplyForm] = useState({
         reply: "",
-        image: "",
     });
 
     const [error, setError] = useState('');
     const [cookies] = useCookies(['token']);
-    const [post, setPost] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [file, setFile] = useState(null);
 
     const navigate = useRouter();
 
     const fetchPost = async () => {
 
         try {
-            console.log("id = ", postId)
             const response = await fetch(`http://localhost:4000/social/post/${postId}`, {
                 credentials: 'include',
                 headers: {
@@ -52,26 +48,26 @@ const CreateReply = () => {
     const handlePostReply = async () => {
         try {
 
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('post', replyForm.reply)
+
             const response = await fetch(`http://localhost:4000/social/create/${postId}`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
                 },
-                body: JSON.stringify(replyForm),
+                body: formData,
             });
 
             await response.json();
 
             if (response.ok) {
-                console.log("reply created")
-
                 // Redirect or perform an action on successful login
                 navigate.replace(`/social/replies/${postId}`)
-            } else {
-                setError(data.message);
-            }
+            } 
+
         } catch (err) {
             setError('Network error');
         }
@@ -83,6 +79,10 @@ const CreateReply = () => {
             [e.target.name]: e.target.value
         })
     };
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]); // Get the first file from the file input
+      };
 
 
   return (
@@ -105,13 +105,15 @@ const CreateReply = () => {
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <form onSubmit={(e) => {
-                    e.preventDefault();
-                    setError('');
-                    handlePostReply()
-                }} className="mt-4 space-y-4 mx-auto max-w-md">
+            <form 
+                encType = 'multipart/formdata'
+                onSubmit={(e) => {
+                e.preventDefault();
+                setError('');
+                handlePostReply()
+            }} className="mt-4 space-y-4 mx-auto max-w-md">
 
-                <input type='text' 
+                <textarea 
                 name="reply"
                 onChange={handleChange}
                 placeholder="Reply to this post"
@@ -121,11 +123,10 @@ const CreateReply = () => {
 
                 <br></br>
 
-                <input type="text" 
+                <label htmlFor="image" className="block" >Upload an image (optional): </label>
+                <input type="file" 
                 name="image"
-                onChange={handleChange} 
-                placeholder='Upload an image'
-                value={replyForm.image} 
+                onChange={handleFileChange} 
                 className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"
                 />
 

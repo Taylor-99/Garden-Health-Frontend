@@ -10,11 +10,8 @@ const UpdatePlant = () => {
     const router = useRouter();
 
     const [updateFormData, setUpdateFormData] = useState({
-        plantName: '',
-        plantSpecies: '',
         watered: '',
         plantDate: '',
-        plantImage: '',
         temperature: '',
         rain: '',
         health: '',
@@ -24,34 +21,40 @@ const UpdatePlant = () => {
     const [error, setError] = useState('');
     const [cookies] = useCookies(['token']);
     const { plantId } = router.query; // Get the dynamic id from the URL
+    const [file, setFile] = useState(null);
 
     const navigate = useRouter();
 
     const handleUpdatePlant = async () => {
         try {
 
-            console.log("Sending data")
+            const formData = new FormData();
+            formData.append('plantImage', file);
+            formData.append('plantDate', updateFormData.plantDate)
+            formData.append('temperature', updateFormData.temperature)
+            formData.append('rain', updateFormData.rain)
+            formData.append('health', updateFormData.health)
+            formData.append('fertilizer', updateFormData.fertilizer)
+            formData.append('notes', updateFormData.notes)
+
             const response = await fetch(`http://localhost:4000/garden/update/${plantId}`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
                 },
-                body: JSON.stringify(updateFormData),
+                body: formData,
             });
 
             await response.json();
 
             if (response.ok) {
-                console.log("plant updated")
-
                 // Redirect or perform an action on successful login
                 navigate.replace(`/plantjournal/details/${plantId}`)
-            } else {
-                setError(data.message);
-            }
+            } 
+
         } catch (err) {
+            console.log(err)
             setError('Network error');
         }
     };
@@ -61,7 +64,11 @@ const UpdatePlant = () => {
             ...updateFormData, 
             [e.target.name]: e.target.value
         })
-    }
+    };
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]); // Get the first file from the file input
+      };
 
   return (
     <div className="min-h-screen flex-col items-center justify-center bg-gray-100 mx-auto ">
@@ -77,18 +84,18 @@ const UpdatePlant = () => {
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <form onSubmit={(e) => {
+            <form
+                encType = 'multipart/formdata'
+                onSubmit={(e) => {
                 e.preventDefault();
                 setError('');
                 handleUpdatePlant()
             }} className="mt-4 space-y-4 mx-auto max-w-md">
                 
-                <label htmlFor="plantImage" className="block">Plant Image: </label>
-                <input type='text' 
+                <label htmlFor="plantImage" className="block">Upload updated picture of plant: </label>
+                <input type='file' 
                 name="plantImage"  
-                placeholder="Upload image of your plant"
-                onChange={handleChange} 
-                value={updateFormData.plantImage} 
+                onChange={handleFileChange} 
                 className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"
                 />
 

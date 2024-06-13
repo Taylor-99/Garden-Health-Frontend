@@ -1,17 +1,15 @@
 
 import NavBar from '../../components/NavBar.jsx'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import Link from 'next/link';
 import { useRouter } from 'next/router'
 import withAuth from '../../components/withAuth.jsx';
 
 const CreatePost = () => {
 
     const [postFormData, setPostFormData] = useState({
-        post: "",
-        image: "",
-    }); 
+        post: "" }); 
+    const [file, setFile] = useState(null);
 
     const [error, setError] = useState('');
     const [cookies] = useCookies(['token']);
@@ -21,15 +19,17 @@ const CreatePost = () => {
     const handleCreatePost = async () => {
         try {
 
-            console.log("Sending data")
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('post', postFormData.post)
+
             const response = await fetch('http://localhost:4000/social/create', {
                 method: 'POST',
                 credentials: "include",
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
                 },
-                body: JSON.stringify(postFormData),
+                body: formData,
             });
 
             await response.json();
@@ -43,6 +43,7 @@ const CreatePost = () => {
                 setError(data.message);
             }
         } catch (err) {
+            console.log(err)
             setError('Network error');
         }
     }
@@ -52,7 +53,11 @@ const CreatePost = () => {
             ...postFormData, 
             [e.target.name]: e.target.value
         })
-    }
+    };
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]); // Get the first file from the file input
+      };
 
   return (
     <div className="min-h-screen flex-col items-center justify-center bg-gray-100 mx-auto">
@@ -73,13 +78,15 @@ const CreatePost = () => {
 
             {error && <p className="text-red-500">{error}</p>}
 
-            <form onSubmit={(e) => {
-                    e.preventDefault();
-                    setError('');
-                    handleCreatePost()
-                }} className="mt-4 space-y-4 mx-auto max-w-md">
+            <form 
+                encType = 'multipart/formdata'
+                onSubmit={(e) => {
+                e.preventDefault();
+                setError('');
+                handleCreatePost()
+            }} className="mt-4 space-y-4 mx-auto max-w-md">
 
-                <input type='text' 
+                <textarea
                 name="post"
                 onChange={handleChange}
                 placeholder="What's on your Mind? Share your ideas, events or achievements"
@@ -89,11 +96,10 @@ const CreatePost = () => {
 
                 <br></br>
 
-                <input type="text" 
+                <label htmlFor="image" className="block" >Upload an image (optional): </label>
+                <input type="file" 
                 name="image"
-                onChange={handleChange} 
-                placeholder='Upload an image'
-                value={postFormData.image} 
+                onChange={handleFileChange} 
                 className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:border-green-600"
                 />
 
