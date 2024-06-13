@@ -10,14 +10,10 @@ const weather = () => {
 
     const [weatherData, setWeatherData] = useState([]);
 
-    const apiBaseUrl = process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_API_URL_PROD
-    : process.env.REACT_APP_API_URL_DEV;
-
         const fetchWeather = async () => {
 
             try {
-                const response = await fetch(`${apiBaseUrl}/dash/getweather`, {
+                const response = await fetch('http://localhost:4000/dash/getweather', {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
