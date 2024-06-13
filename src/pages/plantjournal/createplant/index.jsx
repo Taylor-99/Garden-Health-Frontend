@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import NavBar from '../../components/NavBar.jsx';

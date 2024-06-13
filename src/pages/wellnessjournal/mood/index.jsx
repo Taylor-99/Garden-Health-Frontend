@@ -14,30 +14,30 @@ const Mood = () => {
     const [moodLogData, setMoodLogData] = useState([]);
 
     const router = useRouter();
-
-    const fetchMoodLogs = async () => {
-
-        try {
-            const response = await fetch('http://localhost:4000/mood', {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setMoodLogData(data)
-            // setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
     
     useEffect(() => {
 
+        const fetchMoodLogs = async () => {
+    
+            try {
+                const response = await fetch('http://localhost:4000/mood', {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setMoodLogData(data)
+                // setLoading(false)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+
         fetchMoodLogs();
 
-    }, []);
+    }, [cookies.token]);
 
     function setDate(dateString){
         

@@ -17,6 +17,7 @@ const PlantDetails = () => {
     const [cookies] = useCookies(['token']);
     const [plant, setPlant] = useState(null);
 
+    
     const fetchPlantDetails = async () => {
         try {
             const response = await fetch(`http://localhost:4000/garden/details/${plantId}`, {
@@ -33,8 +34,9 @@ const PlantDetails = () => {
             console.error('Error:', error.message);
         }
     };
-    
+
     useEffect(() => {
+
         if (plantId) {
             fetchPlantDetails();
         }
@@ -77,7 +79,7 @@ const PlantDetails = () => {
         let updatedDate = `${month}/${day}/${year}`
 
         return updatedDate
-    };
+    }
 
     return (
         <div className="min-h-screen flex-col items-center justify-center bg-gray-100" >

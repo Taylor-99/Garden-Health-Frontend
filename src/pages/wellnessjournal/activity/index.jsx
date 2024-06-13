@@ -10,35 +10,33 @@ import { useRouter } from 'next/router'
 const Activity = () => {
 
     const router = useRouter()
-
-    const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
     const [activityLogData, setActivityLogData] = useState([]);
 
-    const fetchActivityLogs = async () => {
-
-        try {
-            const response = await fetch('http://localhost:4000/activity', {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setActivityLogData(data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
     
     useEffect(() => {
 
+        const fetchActivityLogs = async () => {
+    
+            try {
+                const response = await fetch('http://localhost:4000/activity', {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setActivityLogData(data)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+
         fetchActivityLogs();
 
-    }, []);
+    }, [cookies.token]);
 
     function setDate(dateString){
         

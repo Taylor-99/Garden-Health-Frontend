@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import withAuth from '../../components/withAuth';
@@ -20,30 +20,6 @@ const CreateReply = () => {
     const [file, setFile] = useState(null);
 
     const navigate = useRouter();
-
-    const fetchPost = async () => {
-
-        try {
-            const response = await fetch(`http://localhost:4000/social/post/${postId}`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setPost(data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-
-    useEffect(() => {
-
-        fetchPost();
-
-    }, [postId]);
 
     const handlePostReply = async () => {
         try {

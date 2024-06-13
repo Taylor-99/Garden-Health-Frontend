@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -10,8 +10,6 @@ import PlantNavBar from '../components/PlantNavBar.jsx';
 const Search = () => {
 
     const router = useRouter();
-
-    const [isLoading, setLoading] = useState(true);
     const [cookies] = useCookies(['token']);
 
     const { searchTerm } = router.query;
@@ -20,47 +18,45 @@ const Search = () => {
     const [searchedData, setSearchedData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const fetchSearchData = async () => {
-
-        try {
-            const response = await fetch(`http://localhost:4000/plantlibrary/search/${searchTerm}`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setSearchedData(data?.data)
-            setLoading(false)
-
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-
-    const fetchFavorites = async () => {
-
-        try {
-            const response = await fetch(`http://localhost:4000/plantlibrary/getfavorites`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setUserFavorites(data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
     
     useEffect(() => {
+        
+        const fetchSearchData = async () => {
+    
+            try {
+                const response = await fetch(`http://localhost:4000/plantlibrary/search/${searchTerm}`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setSearchedData(data?.data)
+    
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+    
+        const fetchFavorites = async () => {
+    
+            try {
+                const response = await fetch(`http://localhost:4000/plantlibrary/getfavorites`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setUserFavorites(data)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
 
         if (searchTerm) {
-            setLoading(true); // Set loading state before fetching new data
             fetchSearchData();
             fetchFavorites()
         }
@@ -83,7 +79,6 @@ const Search = () => {
 
             const data = await response.json()
             setUserFavorites(data)
-            setLoading(false)
         } catch (error) {
             console.error('Error:', error.message);
         }

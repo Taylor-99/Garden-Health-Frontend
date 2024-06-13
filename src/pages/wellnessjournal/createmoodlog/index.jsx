@@ -1,9 +1,8 @@
 
 import NavBar from '../../components/NavBar.jsx'
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
-import Link from 'next/link';
 import withAuth from '../../components/withAuth';
 
 const CreateMoodLog = () => {

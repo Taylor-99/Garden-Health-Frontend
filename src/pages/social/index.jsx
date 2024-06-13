@@ -8,29 +8,11 @@ import Posts from './components/Post.jsx'
 
 const Socail = () => {
 
-    const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
     const [socialPosts, setSocialPosts] = useState([]);
     const [username, setUsername] = useState("")
 
-    const fetchPosts = async () => {
-
-        try {
-            const response = await fetch('http://localhost:4000/social', {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setSocialPosts(data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
     useEffect(() => { 
         const userName = cookies.user; 
         if (userName) { setUsername(userName); }
@@ -38,11 +20,26 @@ const Socail = () => {
 
     useEffect(() => {
 
+        const fetchPosts = async () => {
+
+            try {
+                const response = await fetch('http://localhost:4000/social', {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setSocialPosts(data)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+
         fetchPosts();
 
-    }, []);
-
-    console.log(socialPosts)
+    }, [cookies.token]);
 
   return (
     <div className="min-h-screen flex-col items-center justify-center bg-gray-100 mx-auto">

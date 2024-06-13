@@ -1,9 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-// import { useRouter } from 'next/router'
 import { useRouter } from 'next/router'
-import Link from 'next/link';
 import withAuth from '../../components/withAuth';
 
 
@@ -12,17 +10,14 @@ const Post = ({socialPosts}, {username}) => {
     const router = useRouter();
 
     const [cookies] = useCookies(['token']);
-    const [replyForm, setReplyForm] = useState({
-        post: "",
-    });
 
     const setLikes = async (postId, postLikes) => {
 
         try {
             const liked = postLikes?.includes(username);
             const method = liked ? 'DELETE' : 'PUT';
-
-            const response = await fetch(`http://localhost:4000/social/likes/${postId}`, {
+            
+            await fetch(`http://localhost:4000/social/likes/${postId}`, {
                 method: method,
                 credentials: 'include',
                 headers: {

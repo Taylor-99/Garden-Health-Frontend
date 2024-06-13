@@ -1,11 +1,10 @@
 
 import NavBar from '../../components/NavBar.jsx'
 import PlantNavBar from '../components/PlantNavBar.jsx'
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import withAuth from '../../components/withAuth';
-import Image from 'next/image'
 
 const Garden = () => {
 
@@ -14,8 +13,11 @@ const Garden = () => {
 
     const [gardenData, setGardenData] = useState([]);
 
-        const fetchGarden = async () => {
+    
+    useEffect(() => {
 
+        const fetchGarden = async () => {
+    
             try {
                 const response = await fetch('http://localhost:4000/garden', {
                     credentials: 'include',
@@ -23,7 +25,7 @@ const Garden = () => {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
                     }
                 });
-
+    
                 const data = await response.json()
                 setGardenData(data)
                 setLoading(false)
@@ -31,12 +33,10 @@ const Garden = () => {
                 console.error('Error:', error.message);
             }
         };
-        
-    useEffect(() => {
 
         fetchGarden();
 
-    }, []);
+    }, [cookies.token]);
 
     if (isLoading) return <p>Loading...</p>
     if (!gardenData) return <p>No plants to show</p>
@@ -56,7 +56,7 @@ const Garden = () => {
         let updatedDate = `${month}/${day}/${year}`
         
         return updatedDate
-    };
+    }
 
 
     return (

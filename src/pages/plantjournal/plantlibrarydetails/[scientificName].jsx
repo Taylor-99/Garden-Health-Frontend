@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import withAuth from '../../components/withAuth.jsx';
 import NavBar from '../../components/NavBar.jsx';
 import PlantNavBar from '../components/PlantNavBar.jsx';
@@ -16,28 +15,30 @@ const PlantLibraryDetails = () => {
     const [cookies] = useCookies(['token']);
     const [plant, setPlant] = useState(null);
 
-    const fetchPlantDetails = async () => {
-        try {
-            const response = await fetch(`http://localhost:4000/plantlibrary/details/${scientificName}`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-    
-            const data = await response.json();
-            setPlant(data.data[0]);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
     
     useEffect(() => {
+
+        const fetchPlantDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:4000/plantlibrary/details/${scientificName}`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+        
+                const data = await response.json();
+                setPlant(data.data[0]);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+        
         if (scientificName) {
             fetchPlantDetails();
         }
-    }, [scientificName]);
+    }, [scientificName, cookies.token]);
 
     if (isLoading) return <p>Loading...</p>
     if (!plant) return <p>No Plant data</p>

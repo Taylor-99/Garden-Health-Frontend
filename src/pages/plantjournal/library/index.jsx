@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
 import { useRouter } from 'next/router';
@@ -22,51 +22,52 @@ const Library = () => {
     const [plantLibrary, setPlantLibrary] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     
-    const fetchLibraryData = async (pageNumber) => {
-
-        try {
-
-            console.log("getting data")
-            const response = await fetch(`http://localhost:4000/plantlibrary/getplants/${pageNumber}`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setPlantLibrary(data?.data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-
-    const fetchFavorites = async () => {
-
-        try {
-            const response = await fetch(`http://localhost:4000/plantlibrary/getfavorites`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setUserFavorites(data)
-            setLoading(false)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-    
     useEffect(() => {
+
+        const fetchLibraryData = async (pageNumber) => {
+
+            try {
+    
+                console.log("getting data")
+                const response = await fetch(`http://localhost:4000/plantlibrary/getplants/${pageNumber}`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setPlantLibrary(data?.data)
+                setLoading(false)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
 
         setLoading(true); // Set loading state before fetching new data
         fetchLibraryData(page);
+
+        const fetchFavorites = async () => {
+
+            try {
+                const response = await fetch(`http://localhost:4000/plantlibrary/getfavorites`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setUserFavorites(data)
+                setLoading(false)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+        
         fetchFavorites()
 
-    }, [page]); // Re-fetch data whenever `page` changes
+    }, [page, cookies.token]); // Re-fetch data whenever `page` changes
 
     const handleNextPage = () => {
         if (page < maxPages) {

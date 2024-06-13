@@ -1,9 +1,8 @@
 
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavBar from '../../components/NavBar';
 import { useCookies } from 'react-cookie';
-import Link from 'next/link';
 import withAuth from '../../components/withAuth';
 
 const DeletePlant = () => {
@@ -12,7 +11,6 @@ const DeletePlant = () => {
     const { plantId } = router.query; // Get the dynamic id from the URL
 
     const [cookies] = useCookies(['token']);
-    const [error, setError] = useState('');
 
     const handleDelete = async () => {
 
@@ -27,9 +25,8 @@ const DeletePlant = () => {
     
             if(response.ok){
                 router.replace('/plantjournal/garden');
-            }else {
-                setError(data.message);
             }
+            
         } catch (error) {
             console.error('Error:', error.message);
         }

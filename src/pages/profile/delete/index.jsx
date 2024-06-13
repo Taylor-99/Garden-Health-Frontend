@@ -1,14 +1,13 @@
 
-import { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar';
 import { useCookies } from 'react-cookie';
-import Link from 'next/link';
 import withAuth from '../../components/withAuth';
 import { useRouter } from 'next/router';
 
 const Delete = () => {
 
     let router = useRouter()
+    const [cookies] = useCookies(['token']);
 
     const handleDelete = async () => {
 
@@ -23,9 +22,8 @@ const Delete = () => {
 
             if(response.ok){
                 router.replace('/auth');
-            }else {
-                setError(data.message);
             }
+            
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -55,4 +53,4 @@ const Delete = () => {
   )
 }
 
-export default Delete
+export default withAuth(Delete)

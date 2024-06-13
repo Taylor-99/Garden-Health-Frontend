@@ -1,34 +1,36 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
 const ReplyPost = ({postid}) => {
     const [cookies] = useCookies(['token']);
     const [post, setPost] = useState([]);
 
-    const fetchPost = async () => {
-
-        try {
-            console.log("id = ", postid)
-            const response = await fetch(`http://localhost:4000/social/post/${postid}`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
-
-            const data = await response.json()
-            setPost(data)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-
     useEffect(() => {
+
+        const fetchPost = async () => {
+    
+            try {
+                console.log("id = ", postid)
+                const response = await fetch(`http://localhost:4000/social/post/${postid}`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+    
+                const data = await response.json()
+                setPost(data)
+            } catch (error) {
+                console.error('Error:', error.message);
+            };
+        };
 
         fetchPost();
 
     }, [postid]);
+
+
   return (
     <div>
         <div className="bg-white rounded-lg shadow-md p-4 mb-4 w-full" >

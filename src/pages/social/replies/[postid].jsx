@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
@@ -15,29 +15,30 @@ const Replies = () => {
     const [cookies] = useCookies(['token']);
     const [replyData, setReplyData] = useState([])
 
-    const fetchPostReplies = async () => {
-
-        try {
-            console.log("getting replies")
-            const response = await fetch(`http://localhost:4000/social/replies/${postid}`, {
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                }
-            });
     
-            const data = await response.json()
-            setReplyData(data)
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    };
-
     useEffect(() => {
+
+        const fetchPostReplies = async () => {
+    
+            try {
+                console.log("getting replies")
+                const response = await fetch(`http://localhost:4000/social/replies/${postid}`, {
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                    }
+                });
+        
+                const data = await response.json()
+                setReplyData(data)
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
 
         fetchPostReplies();
 
-    }, [postid]);
+    }, [postid, cookies.token]);
 
     console.log(replyData)
 

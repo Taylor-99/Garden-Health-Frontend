@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import withAuth from '../../components/withAuth';
 
@@ -10,28 +10,29 @@ const weather = () => {
 
     const [weatherData, setWeatherData] = useState([]);
 
-        const fetchWeather = async () => {
-
-            try {
-                const response = await fetch('http://localhost:4000/dash/getweather', {
-                    credentials: 'include',
-                    headers: {
-                        Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
-                    }
-                });
-
-                const data = await response.json()
-                setWeatherData(data)
-                setLoading(false)
-            } catch (error) {
-                console.error('Error:', error.message);
+    
+    useEffect(() => {
+            const fetchWeather = async () => {
+        
+                try {
+                    const response = await fetch('http://localhost:4000/dash/getweather', {
+                        credentials: 'include',
+                        headers: {
+                            Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
+                        }
+                    });
+        
+                    const data = await response.json()
+                    setWeatherData(data)
+                    setLoading(false)
+                } catch (error) {
+                    console.error('Error:', error.message);
+                }
             }
-        }
 
-        useEffect(() => {
             fetchWeather();
 
-        }, []);
+        }, [cookies.token]);
 
         if (isLoading) return <p>Loading...</p>
         if (!weatherData) return <p>No weather data</p>
