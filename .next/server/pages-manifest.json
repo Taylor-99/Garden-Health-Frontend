@@ -3,8 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/plantjournal/library": "pages/plantjournal/library.js",
-  "/plantjournal/garden": "pages/plantjournal/garden.js",
-  "/profile": "pages/profile.js",
-  "/social": "pages/social.js",
-  "/dashboard": "pages/dashboard.js"
+  "/plantjournal/garden": "pages/plantjournal/garden.js"
 }

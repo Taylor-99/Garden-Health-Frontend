@@ -25,6 +25,8 @@ const Library = () => {
     const fetchLibraryData = async (pageNumber) => {
 
         try {
+
+            console.log("getting data")
             const response = await fetch(`http://localhost:4000/plantlibrary/getplants/${pageNumber}`, {
                 credentials: 'include',
                 headers: {
