@@ -6,7 +6,7 @@ import withAuth from '../../components/withAuth';
 // require("dotenv").config({ path: '../../../.env'})
 
 console.log(process.env)
-const weather = () => {
+const Weather = () => {
 
     const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
 
@@ -66,4 +66,4 @@ const weather = () => {
     )
 }
 
-export default withAuth(weather)
+export default withAuth(Weather)

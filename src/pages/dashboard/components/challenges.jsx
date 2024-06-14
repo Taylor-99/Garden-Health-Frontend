@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import withAuth from '../../components/withAuth';
 
-const challenges = () => {
+const Challenges = () => {
 
     const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
 
@@ -82,4 +82,4 @@ const challenges = () => {
   )
 }
 
-export default withAuth(challenges)
+export default withAuth(Challenges)

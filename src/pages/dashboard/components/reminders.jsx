@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import withAuth from '../../components/withAuth';
 
-const reminders = () => {
+const Reminders = () => {
 
     const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
 
@@ -90,4 +90,4 @@ const reminders = () => {
   )
 }
 
-export default withAuth(reminders)
+export default withAuth(Reminders)
