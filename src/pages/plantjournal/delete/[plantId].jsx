@@ -7,6 +7,8 @@ import withAuth from '../../components/withAuth';
 
 const DeletePlant = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter();
     const { plantId } = router.query; // Get the dynamic id from the URL
 
@@ -15,7 +17,7 @@ const DeletePlant = () => {
     const handleDelete = async () => {
 
         try {
-            const response = await fetch(`http://localhost:4000/garden/details/${plantId}`, {
+            const response = await fetch(`${backend_endpoint}/garden/details/${plantId}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {

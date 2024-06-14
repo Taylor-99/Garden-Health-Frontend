@@ -1,7 +1,9 @@
 
 import '../App.css'
 import withAuth from './components/withAuth'
-// import NavBar from './components/NavBar'
+import dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables
 
 const App = ({Component, pageProps}) => {
 

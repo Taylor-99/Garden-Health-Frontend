@@ -8,6 +8,8 @@ import withAuth from '../../components/withAuth';
 import { useRouter } from 'next/router'
 
 const Mood = () => {
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     // const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
@@ -20,7 +22,7 @@ const Mood = () => {
         const fetchMoodLogs = async () => {
     
             try {
-                const response = await fetch('http://localhost:4000/mood', {
+                const response = await fetch(`${backend_endpoint}/mood`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

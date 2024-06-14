@@ -8,6 +8,8 @@ import ReplyPost from '../components/ReplyPost'
 
 const CreateReply = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter();
     const { postId } = router.query; // Get the dynamic id from the URL
 
@@ -28,7 +30,7 @@ const CreateReply = () => {
             formData.append('image', file);
             formData.append('post', replyForm.reply)
 
-            const response = await fetch(`http://localhost:4000/social/create/${postId}`, {
+            const response = await fetch(`${backend_endpoint}/social/create/${postId}`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {

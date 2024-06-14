@@ -5,6 +5,8 @@ import withAuth from '../../components/withAuth';
 
 const reminders = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
@@ -13,7 +15,7 @@ const reminders = () => {
     const fetchReminders = async () => {
 
         try {
-            const response = await fetch('http://localhost:4000/dash/reminders', {
+            const response = await fetch(`${backend_endpoint}/dash/reminders`, {
                 credentials: 'include',
                 headers: {
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

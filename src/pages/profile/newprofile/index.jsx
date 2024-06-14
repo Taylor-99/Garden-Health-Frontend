@@ -4,6 +4,9 @@ import withAuth from '../../components/withAuth';
 import { useCookies } from 'react-cookie';
 
 const CreateProfile = () => {
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [profileData, setProfileData] = useState({
         fName: '',
         lName: '',
@@ -32,7 +35,7 @@ const CreateProfile = () => {
             profileFormData.append('gExperience', profileData.gExperience)
             profileFormData.append('aExperience', profileData.aExperience)
 
-            const response = await fetch('http://localhost:4000/profile/newprofile', {
+            const response = await fetch(`${backend_endpoint}/profile/newprofile`, {
                 method: 'POST',
                 credentials: 'include', // Important to include cookies
                 headers: {

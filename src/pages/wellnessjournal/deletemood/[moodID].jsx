@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 
 const Delete = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter();
     const { moodID } = router.query; // Get the dynamic id from the URL
 
@@ -14,7 +16,7 @@ const Delete = () => {
     const handleDelete = async () => {
 
         try {
-            const response = await fetch(`http://localhost:4000/mood/${moodID}`, {
+            const response = await fetch(`${backend_endpoint}/mood/${moodID}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {

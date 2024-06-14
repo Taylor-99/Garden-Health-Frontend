@@ -8,6 +8,8 @@ import Posts from './components/Post.jsx'
 
 const Socail = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [cookies] = useCookies(['token']);
 
     const [socialPosts, setSocialPosts] = useState([]);
@@ -23,7 +25,7 @@ const Socail = () => {
         const fetchPosts = async () => {
 
             try {
-                const response = await fetch('http://localhost:4000/social', {
+                const response = await fetch(`${backend_endpoint}/social`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

@@ -7,6 +7,8 @@ import withAuth from '../../components/withAuth';
 
 const Post = ({socialPosts}, {username}) => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter();
 
     const [cookies] = useCookies(['token']);
@@ -17,7 +19,7 @@ const Post = ({socialPosts}, {username}) => {
             const liked = postLikes?.includes(username);
             const method = liked ? 'DELETE' : 'PUT';
             
-            await fetch(`http://localhost:4000/social/likes/${postId}`, {
+            await fetch(`${backend_endpoint}/social/likes/${postId}`, {
                 method: method,
                 credentials: 'include',
                 headers: {

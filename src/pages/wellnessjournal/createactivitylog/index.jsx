@@ -7,6 +7,8 @@ import withAuth from '../../components/withAuth';
 
 const CreateActivityLog = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter()
 
     const [activityFormData, setActivityFormData] = useState({
@@ -24,7 +26,7 @@ const CreateActivityLog = () => {
         try {
 
             console.log("Sending data")
-            const response = await fetch('http://localhost:4000/activity/create', {
+            const response = await fetch(`${backend_endpoint}/activity/create`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -41,9 +43,8 @@ const CreateActivityLog = () => {
 
                 // Redirect or perform an action on successful login
                 navigate.replace('/wellnessjournal/activity')
-            } else {
-                setError(data.message);
-            }
+            } 
+            
         } catch (err) {
             setError('Network error');
         }

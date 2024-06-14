@@ -3,19 +3,23 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import withAuth from '../../components/withAuth';
 
+// require("dotenv").config({ path: '../../../.env'})
+
+console.log(process.env)
 const weather = () => {
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
 
     const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
     const [weatherData, setWeatherData] = useState([]);
-
     
     useEffect(() => {
             const fetchWeather = async () => {
         
                 try {
-                    const response = await fetch('http://localhost:4000/dash/getweather', {
+                    const response = await fetch(`${backend_endpoint}/dash/getweather`, {
                         credentials: 'include',
                         headers: {
                             Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

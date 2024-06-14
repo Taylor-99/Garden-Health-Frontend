@@ -9,6 +9,8 @@ import PlantNavBar from '../components/PlantNavBar'
 
 
 const PlantDetails = () => {
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
     
     const router = useRouter();
     const { plantId } = router.query; // Get the dynamic id from the URL
@@ -20,7 +22,7 @@ const PlantDetails = () => {
     
     const fetchPlantDetails = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/garden/details/${plantId}`, {
+            const response = await fetch(`${backend_endpoint}/garden/details/${plantId}`, {
                 credentials: 'include',
                 headers: {
                     Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

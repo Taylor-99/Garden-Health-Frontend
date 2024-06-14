@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
 const ReplyPost = ({postid}) => {
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [cookies] = useCookies(['token']);
     const [post, setPost] = useState([]);
 
@@ -12,7 +15,7 @@ const ReplyPost = ({postid}) => {
     
             try {
                 console.log("id = ", postid)
-                const response = await fetch(`http://localhost:4000/social/post/${postid}`, {
+                const response = await fetch(`${backend_endpoint}/social/post/${postid}`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

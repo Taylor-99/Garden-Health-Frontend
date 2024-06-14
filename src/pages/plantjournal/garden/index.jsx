@@ -8,6 +8,9 @@ import withAuth from '../../components/withAuth';
 
 const Garden = () => {
 
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
@@ -19,7 +22,7 @@ const Garden = () => {
         const fetchGarden = async () => {
     
             try {
-                const response = await fetch('http://localhost:4000/garden', {
+                const response = await fetch(`${backend_endpoint}/garden`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

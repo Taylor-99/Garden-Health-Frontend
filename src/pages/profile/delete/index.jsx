@@ -6,13 +6,15 @@ import { useRouter } from 'next/router';
 
 const Delete = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     let router = useRouter()
     const [cookies] = useCookies(['token']);
 
     const handleDelete = async () => {
 
         try {
-            const response = await fetch(`http://localhost:4000/profile`, {
+            const response = await fetch(`${backend_endpoint}/profile`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {

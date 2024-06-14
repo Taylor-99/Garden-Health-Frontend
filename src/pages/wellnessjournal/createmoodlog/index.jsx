@@ -7,6 +7,8 @@ import withAuth from '../../components/withAuth';
 
 const CreateMoodLog = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter()
 
     const [moodFormData, setMoodFormData] = useState({
@@ -24,7 +26,7 @@ const CreateMoodLog = () => {
         try {
 
             console.log("Sending data")
-            const response = await fetch('http://localhost:4000/mood/create', {
+            const response = await fetch(`${backend_endpoint}/mood/create`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -41,9 +43,8 @@ const CreateMoodLog = () => {
 
                 // Redirect or perform an action on successful login
                 navigate.replace('/wellnessjournal/mood')
-            } else {
-                setError(data.message);
-            }
+            } 
+            
         } catch (err) {
             setError('Network error');
         }

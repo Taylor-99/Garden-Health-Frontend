@@ -7,6 +7,8 @@ import withAuth from '../components/withAuth.jsx';
 
 const ShowProfile = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter()
     const [cookies] = useCookies(['token']);
 
@@ -18,7 +20,7 @@ const ShowProfile = () => {
         const getProfile = async () => {
     
             try {
-                const response = await fetch('http://localhost:4000/profile/', {
+                const response = await fetch(`${backend_endpoint}/profile/`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

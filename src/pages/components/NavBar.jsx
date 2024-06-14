@@ -20,9 +20,11 @@ const NavBar = (props) => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:4000/auth/logout', {
+            const response = await fetch(`${backend_endpoint}/auth/logout`, {
                 method: 'get',
                 credentials: "include",
                 headers: {

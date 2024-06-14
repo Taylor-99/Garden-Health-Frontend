@@ -18,9 +18,11 @@ export default function Auth(){
 
     const navigate = useRouter()
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://localhost:4000/auth/login', {
+            const response = await fetch(`${backend_endpoint}/auth/login`, {
                 method: 'POST',
                 withCredentials: true,
                 headers: {
@@ -46,7 +48,7 @@ export default function Auth(){
 
     const handleSignUp = async () => {
         try {
-            const response = await fetch('http://localhost:4000/auth/signup', {
+            const response = await fetch(`${backend_endpoint}/auth/signup`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {

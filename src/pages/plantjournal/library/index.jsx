@@ -10,6 +10,9 @@ import PlantNavBar from '../components/PlantNavBar.jsx';
 
 const Library = () => {
 
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter();
 
     const [isLoading, setLoading] = useState(true);
@@ -29,7 +32,7 @@ const Library = () => {
             try {
     
                 console.log("getting data")
-                const response = await fetch(`http://localhost:4000/plantlibrary/getplants/${pageNumber}`, {
+                const response = await fetch(`${backend_endpoint}/plantlibrary/getplants/${pageNumber}`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

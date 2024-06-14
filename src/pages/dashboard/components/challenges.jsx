@@ -5,6 +5,8 @@ import withAuth from '../../components/withAuth';
 
 const challenges = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [isLoading, setLoading] = useState(true)
     const [cookies] = useCookies(['token']);
 
@@ -15,7 +17,7 @@ const challenges = () => {
         const fetchChallenges = async () => {
 
             try {
-                const response = await fetch('http://localhost:4000/dash/challenge', {
+                const response = await fetch(`${backend_endpoint}/dash/challenge`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

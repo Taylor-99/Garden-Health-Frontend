@@ -9,6 +9,9 @@ import PlantNavBar from '../components/PlantNavBar.jsx';
 
 const Search = () => {
 
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter();
     const [cookies] = useCookies(['token']);
 
@@ -24,7 +27,7 @@ const Search = () => {
         const fetchSearchData = async () => {
     
             try {
-                const response = await fetch(`http://localhost:4000/plantlibrary/search/${searchTerm}`, {
+                const response = await fetch(`${backend_endpoint}/plantlibrary/search/${searchTerm}`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header

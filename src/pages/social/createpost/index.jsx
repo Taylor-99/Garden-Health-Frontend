@@ -7,6 +7,8 @@ import withAuth from '../../components/withAuth.jsx';
 
 const CreatePost = () => {
 
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const [postFormData, setPostFormData] = useState({
         post: "" }); 
     const [file, setFile] = useState(null);
@@ -23,7 +25,7 @@ const CreatePost = () => {
             formData.append('image', file);
             formData.append('post', postFormData.post)
 
-            const response = await fetch('http://localhost:4000/social/create', {
+            const response = await fetch(`${backend_endpoint}/social/create`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {

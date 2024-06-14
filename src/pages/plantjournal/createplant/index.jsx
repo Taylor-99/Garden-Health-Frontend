@@ -7,6 +7,9 @@ import withAuth from '../../components/withAuth.jsx'
 
 const CreatePlant = () => {
 
+
+    const backend_endpoint = process.env.NEXT_PUBLIC_BACKEND_URL
+
     const router = useRouter()
 
     const [plantFormData, setPlantFormData] = useState({
@@ -42,7 +45,7 @@ const CreatePlant = () => {
             formData.append('fertilizer', plantFormData.fertilizer)
             formData.append('notes', plantFormData.notes)
 
-            const response = await fetch('http://localhost:4000/garden/create', {
+            const response = await fetch(`${backend_endpoint}/garden/create`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {
