@@ -1,6 +1,5 @@
 
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import NavBar from '../../components/NavBar';
 import { useCookies } from 'react-cookie';
 import withAuth from '../../components/withAuth';

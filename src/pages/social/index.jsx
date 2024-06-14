@@ -1,6 +1,6 @@
 
 import NavBar from '../components/NavBar.jsx'
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import withAuth from '../components/withAuth.jsx'

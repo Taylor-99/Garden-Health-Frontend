@@ -25,7 +25,7 @@ const ReplyPost = ({postid}) => {
                 const data = await response.json()
                 setPost(data)
             } catch (error) {
-                console.error('Error:', error.message);
+                console.error('Error:', error.message)
             };
         };
 

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Cookies from 'js-cookie';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 // import fetch from 'isomorphic-unfetch'

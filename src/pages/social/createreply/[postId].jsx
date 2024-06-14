@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import withAuth from '../../components/withAuth';
