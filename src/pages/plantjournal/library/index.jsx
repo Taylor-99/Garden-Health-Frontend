@@ -53,7 +53,7 @@ const Library = () => {
         const fetchFavorites = async () => {
 
             try {
-                const response = await fetch(`http://localhost:4000/plantlibrary/getfavorites`, {
+                const response = await fetch(`${backend_endpoint}/plantlibrary/getfavorites`, {
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${cookies.token}`, // Include the token in the Authorization header
