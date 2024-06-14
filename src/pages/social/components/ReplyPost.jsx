@@ -26,7 +26,7 @@ const ReplyPost = ({postid}) => {
                 setPost(data)
             } catch (error) {
                 console.error('Error:', error.message)
-            };
+            }
         };
 
         fetchPost();
